@@ -12,6 +12,15 @@ pipeline {
         pollSCM('* * * * *')
     }
     stages {
+        
+        stage('Logging into AWS ECR') {
+            steps {
+            script {
+                sh "aws ecr get-login-password --region eu-west-2 | docker login --username AWS --password-stdin 327658144915.dkr.ecr.eu-west-2.amazonaws.com"
+                    }
+ 
+                }
+            }
         stage('Build') {
             steps {
                 echo "Running ${env.BUILD_NUMBER} in ${AWS_REGION}"
