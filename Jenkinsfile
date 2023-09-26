@@ -16,8 +16,6 @@ pipeline {
             steps {
                 echo "Running ${env.BUILD_NUMBER} in ${AWS_REGION}"
                 echo "building + pushing to container repository"
-                sh "sudo apt update"
-                sh "sudo apt install docker.io"
                 sh "aws ecr get-login-password --region ${AWS_REGION} --no-include-email | sh -"
                 sh "docker build -t ${ECR_REGISTRY}/${ECR_REPOSITORY}:${VERSION} ."
                 sh "docker push ${ECR_REGISTRY}/${ECR_REPOSITORY}:${VERSION}"
