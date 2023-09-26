@@ -6,6 +6,7 @@ pipeline {
         ECR_REPOSITORY = 'lovegamesfrontend'
         INITIAL_VERSION = '1'
         HELM_CHART = 'project-frontend'
+        VERSION = INITIAL_VERSION.env.BUILD_NUMBER
     }
     triggers {
         pollSCM('* * * * *')
@@ -15,29 +16,16 @@ pipeline {
             steps {
                 echo "Running ${env.BUILD_NUMBER} in ${AWS_REGION}"
                 echo "building + pushing to container repository"
-                def VERSION = "${INITIAL_VERSION}.${env.BUILD_NUMBER}"
-                sh "echo ${VERSION}=${VERSION} > version.env"
                 sh "aws ecr get-login-password --region ${AWS_REGION} --no-include-email | sh -"
                 sh "docker build -t ${ECR_REGISTRY}/${ECR_REPOSITORY}:${VERSION} ."
                 sh "docker push ${ECR_REGISTRY}/${ECR_REPOSITORY}:${VERSION}"
+            }
         }
-    }
         stage('Deploy') {
             steps {
-                echo "deploying" 
-                script {
-                    def VERSION
-                    try {
-                        VERSION = readFile('version.env').trim()
-                    } 
-                    catch (Exception e) {
-                        error("Failed to load version from version.env: ${e.message}")
-                        currentBuild.result = 'FAILURE'
-                        return
-                    }
-                    sh 'helm repo update'
-                    sh 'helm upgrade --install team-project-frontend $HELM_CHART --set image.tag=$VERSION'
-                }
+                echo "deploying"
+                sh "helm repo update"
+                sh "helm upgrade --${HELM_CHART} ${HELM_CHART} --set image.tag=${VERSION}"
             }
         }
     }
