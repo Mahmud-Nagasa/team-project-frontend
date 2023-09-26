@@ -6,7 +6,7 @@ pipeline {
         ECR_REPOSITORY = 'lovegamesfrontend'
         INITIAL_VERSION = '1'
         HELM_CHART = 'project-frontend'
-        VERSION = ${INITIAL_VERSION}.${env.BUILD_NUMBER}
+        VERSION = "${INITIAL_VERSION}.${env.BUILD_NUMBER}"
     }
     triggers {
         pollSCM('* * * * *')
