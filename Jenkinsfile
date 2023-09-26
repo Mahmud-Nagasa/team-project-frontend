@@ -1,6 +1,8 @@
 
 pipeline {
-    agent any
+  agent {
+        docker { image 'node:18.18.0-alpine3.18' }
+    }
     environment {
         AWS_REGION = 'eu-west-2'
         ECR_REGISTRY = '494108812211.dkr.ecr.eu-west-2.amazonaws.com'
@@ -18,7 +20,7 @@ pipeline {
                 echo "Running ${env.BUILD_NUMBER} in ${AWS_REGION}"
                 echo "building + pushing to container repository"
                 sh "aws ecr get-login-password --region ${AWS_REGION} --no-include-email | sh -"
-                sh "docker build -t ${ECR_REGISTRY}:${VERSION} ."
+                sh "docker build -t ${ECR_REGISTRY}/${ECR_REPOSITORY}:${VERSION} ."
                 sh "docker push ${ECR_REGISTRY}/${ECR_REPOSITORY}:${VERSION}"
             }
         }
