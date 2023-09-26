@@ -8,7 +8,7 @@ pipeline {
         HELM_CHART = 'project-frontend'
     }
     triggers {
-        pollSCM '* * * * *'
+        pollSCM('* * * * *')
     }
     stages {
         stage('Clone') {
