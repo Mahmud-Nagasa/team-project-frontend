@@ -3,9 +3,8 @@ pipeline {
   agent any
     environment {
         AWS_REGION = 'eu-west-2'
-        ECR_REGISTRY = '494108812211.dkr.ecr.eu-west-2.amazonaws.com'
-        ECR_REPOSITORY = 'lovegamesfrontend'
-        INITIAL_VERSION = '1'
+        ECR_REGISTRY = '327658144915.dkr.ecr.eu-west-2.amazonaws.com'
+        ECR_REPOSITORY = 'project-frontend'
         HELM_CHART = 'project-frontend'
         VERSION = "${INITIAL_VERSION}.${env.BUILD_NUMBER}"
     }
