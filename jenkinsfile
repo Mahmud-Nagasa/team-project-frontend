@@ -11,12 +11,6 @@ pipeline {
         pollSCM('* * * * *')
     }
     stages {
-        stage('Clone') {
-            steps {
-                echo "cloning the repository"
-                git branch: 'master', url: 'https://github.com/Mahmud-Nagasa/team-project-frontend'
-            }
-        }
         stage('Build') {
             steps {
                 echo "building + pushing to container repository"
