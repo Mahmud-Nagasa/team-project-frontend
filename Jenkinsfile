@@ -1,6 +1,6 @@
 
 pipeline {
-    agent an
+    agent any
     environment {
         AWS_REGION = 'eu-west-2'
         ECR_REGISTRY = '494108812211.dkr.ecr.eu-west-2.amazonaws.com'
