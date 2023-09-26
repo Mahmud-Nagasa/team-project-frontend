@@ -4,7 +4,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install --production
 COPY . .
-RUN npm run build
+RUN npm create vite@latest
 
 # Stage 2: Create the production environment with Nginx
 FROM nginx:1.21.0-alpine AS production
