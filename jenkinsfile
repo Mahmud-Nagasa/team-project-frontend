@@ -4,7 +4,7 @@ pipeline {
         AWS_REGION = 'eu-west-2'
         ECR_REGISTRY = '494108812211.dkr.ecr.eu-west-2.amazonaws.com'
         ECR_REPOSITORY = 'lovegamesfrontend'
-        INITIAL_VERSION = '1' // Changed to a string
+        INITIAL_VERSION = '1'
         HELM_CHART = 'project-frontend'
     }
     triggers {
@@ -13,17 +13,15 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo "Running in ${AWS}, ${INITIAL_VERSION}, ${env.BUILD_NUMBER}"
+                echo "Running ${env.BUILD_NUMBER} in ${AWS_REGION}"
                 echo "building + pushing to container repository"
-                script {
-                    def VERSION = "${INITIAL_VERSION}.${env.BUILD_NUMBER}" // Use a dot to separate version parts
-                    sh "echo ${VERSION}=${VERSION} > version.env"
-                    sh "aws ecr get-login-password --region ${AWS_REGION} --no-include-email | sh -"
-                    sh "docker build -t ${ECR_REGISTRY}/${ECR_REPOSITORY}:${VERSION} ."
-                    sh "docker push ${ECR_REGISTRY}/${ECR_REPOSITORY}:${VERSION}"
-                }
-            }
+                def VERSION = "${INITIAL_VERSION}.${env.BUILD_NUMBER}"
+                sh "echo ${VERSION}=${VERSION} > version.env"
+                sh "aws ecr get-login-password --region ${AWS_REGION} --no-include-email | sh -"
+                sh "docker build -t ${ECR_REGISTRY}/${ECR_REPOSITORY}:${VERSION} ."
+                sh "docker push ${ECR_REGISTRY}/${ECR_REPOSITORY}:${VERSION}"
         }
+    }
         stage('Deploy') {
             steps {
                 echo "deploying" 
