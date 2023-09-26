@@ -6,7 +6,7 @@ pipeline {
         ECR_REPOSITORY = 'lovegamesfrontend'
         INITIAL_VERSION = '1'
         HELM_CHART = 'project-frontend'
-        VERSION = INITIAL_VERSION.env.BUILD_NUMBER
+        VERSION = ${INITIAL_VERSION}.${env.BUILD_NUMBER}
     }
     triggers {
         pollSCM('* * * * *')
@@ -25,7 +25,7 @@ pipeline {
             steps {
                 echo "deploying"
                 sh "helm repo update"
-                sh "helm upgrade --${HELM_CHART} ${HELM_CHART} --set image.tag=${VERSION}"
+                sh "helm upgrade --install ${HELM_CHART} ${HELM_CHART} --set image.tag=${VERSION}"
             }
         }
     }
