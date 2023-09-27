@@ -32,7 +32,6 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo "deploying"
-                sh "aws eks --region eu-west-2 update-kubeconfig \ --name ce-cluster"
                 sh "helm install ${HELM_CHART} ./${HELM_CHART}"
             }
         }
