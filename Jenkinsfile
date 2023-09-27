@@ -23,7 +23,7 @@ pipeline {
         stage('push') {
             steps {
                 script {
-                    docker.withRegistry("https://${ECR_REGISTRY}", "ecr:${AWS_REGION}:ecr-access") {
+                    docker.withRegistry("https://${ECR_REGISTRY}", "ecr:${AWS_REGION}:admin") {
                         docker.image("${ECR_REPOSITORY}").push("${VERSION}")
                     }
                 }
