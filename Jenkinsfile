@@ -33,7 +33,7 @@ pipeline {
             steps {
                 echo "deploying"
                 sh 'kubectl get nodes'
-                sh "helm install ${HELM_CHART} ./${HELM_CHART}"
+                sh "helm upgrade --install ${HELM_CHART} ./${HELM_CHART}"
             }
         }
     }
