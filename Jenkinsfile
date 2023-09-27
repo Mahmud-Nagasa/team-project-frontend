@@ -18,7 +18,6 @@ pipeline {
             steps {
               
                 echo "building + pushing to container repository"
-                sh "echo "${VERSION}=${VERSION} > version.env""
                 sh "aws ecr get-login-password --region ${AWS_REGION} --no-include-email | sh -"
                 sh "docker build -t ${ECR_REPOSITORY}:latest ."
             }
