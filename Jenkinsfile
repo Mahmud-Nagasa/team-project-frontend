@@ -3,7 +3,7 @@ pipeline {
     environment {
         AWS_REGION = 'eu-west-2'
         ECR_REGISTRY = '494108812211.dkr.ecr.eu-west-2.amazonaws.com'
-        ECR_REPOSITORY = 'lovegames-project-backend'
+        ECR_REPOSITORY = 'lovegames-project-frontend'
         HELM_CHART = 'project-frontend'
         INITIAL_VERSION = 1
         VERSION = "${INITIAL_VERSION}.${env.BUILD_NUMBER}"
@@ -17,7 +17,7 @@ pipeline {
                 echo "Running ${env.BUILD_NUMBER} in ${AWS_REGION}"
                 echo "building + pushing to container repository"
                 sh "aws ecr get-login-password --region ${AWS_REGION} --no-include-email | sh -"
-                sh "docker build -t ${ECR_REGISTRY}/${ECR_REPOSITORY}:latest ."
+                sh "docker build -t ${ECR_REPOSITORY}:latest ."
             }
         }
         stage('push') {
