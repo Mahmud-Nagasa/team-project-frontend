@@ -31,8 +31,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo "deploying"
-                sh "helm repo update"
-                sh "helm upgrade --install ${HELM_CHART} ${HELM_CHART} --set image.tag=${VERSION}"
+                sh "kubcetl apply -f backend-deployment.yaml"
             }
         }
     }
