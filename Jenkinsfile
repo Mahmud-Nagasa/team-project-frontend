@@ -31,7 +31,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo "deploying"
-                sh "helm install ${HELM_CHART} --set image.tag=${VERSION}"
+                sh "helm install ${HELM_CHART} ./${HELM_CHART}"
             }
         }
     }
