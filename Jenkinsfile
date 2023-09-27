@@ -31,7 +31,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo "deploying"
-                sh "kubcetl apply -f backend-deployment.yaml"
+                sh "kubectl apply -f backend-deployment.yaml"
             }
         }
     }
