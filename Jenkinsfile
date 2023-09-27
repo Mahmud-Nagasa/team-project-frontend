@@ -10,7 +10,7 @@ pipeline {
         INITIAL_VERSION = 1
         VERSION = "${INITIAL_VERSION}.${env.BUILD_NUMBER}"
     }
-    triggers {
+    triggers { 
         pollSCM('* * * * *')
     }
     stages {
