@@ -17,13 +17,13 @@ pipeline {
                 echo "Running ${env.BUILD_NUMBER} in ${AWS_REGION}"
                 echo "building + pushing to container repository"
                 sh "aws ecr get-login-password --region ${AWS_REGION} --no-include-email | sh -"
-                sh "docker build -t ${ECR_REGISTRY}/${ECR_REPOSITORY}:latest ."
+                sh "docker build -t ${ECR_REGISTRY}/${ECR_REPOSITORY}:${VERSION} ."
             }
         }
         stage('push') {
             steps {
                 script {
-                    docker.withRegistry("https://${ECR_REGISTRY}", "ecr:${AWS_REGION}:testing") {
+                    docker.withRegistry("https://${ECR_REGISTRY}", "ecr:${AWS_REGION}:ecr-access") {
                         docker.image("${ECR_REPOSITORY}").push("${VERSION}")
                     }
                 }
