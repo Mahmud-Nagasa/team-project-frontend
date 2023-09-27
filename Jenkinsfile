@@ -20,6 +20,7 @@ pipeline {
                 echo "building + pushing to container repository"
                 sh "aws ecr get-login-password --region ${AWS_REGION} --no-include-email | sh -"
                 sh "docker build -t ${ECR_REPOSITORY}:latest ."
+                writeFile file: 'version.env', text: "VERSION=${VERSION}"
             }
         }
         stage('push') {
@@ -35,7 +36,7 @@ pipeline {
             steps {
                 echo "deploying"
                 sh 'kubectl get nodes'
-                sh "helm upgrade --install ${HELM_CHART} ./${HELM_CHART}"
+                sh "helm install ${HELM_CHART} ./${HELM_CHART} --set image.tag=${VERSION}"
             }
         }
     }
