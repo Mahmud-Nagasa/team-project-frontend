@@ -32,6 +32,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo "deploying"
+                sh 'kubectl get nodes'
                 sh "helm install ${HELM_CHART} ./${HELM_CHART}"
             }
         }
