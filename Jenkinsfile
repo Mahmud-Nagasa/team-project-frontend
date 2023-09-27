@@ -22,8 +22,8 @@ pipeline {
         stage('push') {
             steps {
                 script {
-                    docker.withRegistry("https://${ECR_REPOSITORY}", "ecr:${AWS_REGION}:testing") {
-                        docker.image("${ECR_REGISTRY}").push("${VERSION}")
+                    docker.withRegistry("https://${ECR_REGISTRY}", "ecr:${AWS_REGION}:testing") {
+                        docker.image("${ECR_REPOSITORY}").push("${VERSION}")
                     }
                 }
             }
