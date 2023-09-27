@@ -16,3 +16,6 @@ service:
   name: project-frontend
   # port: 3000
   type: LoadBalancer
+
+image:
+  tag: ""
