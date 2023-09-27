@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: {{ .Values.deployment.name }}
-        image: 494108812211.dkr.ecr.eu-west-2.amazonaws.com/project-frontend:1.0
+        image: 494108812211.dkr.ecr.eu-west-2.amazonaws.com/lovegames-project-frontend:{{.Values.image.tag}}
         ports: 
         - containerPort: 80
       imagePullSecrets:
