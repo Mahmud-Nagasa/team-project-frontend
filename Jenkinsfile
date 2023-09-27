@@ -2,9 +2,10 @@ pipeline {
     agent any
     environment {
         AWS_REGION = 'eu-west-2'
-        ECR_REGISTRY = '327658144915.dkr.ecr.eu-west-2.amazonaws.com'
-        ECR_REPOSITORY = 'project-frontend'
+        ECR_REGISTRY = '494108812211.dkr.ecr.eu-west-2.amazonaws.com'
+        ECR_REPOSITORY = 'lovegames-project-backend'
         HELM_CHART = 'project-frontend'
+        INITIAL_VERSION = 1
         VERSION = "${INITIAL_VERSION}.${env.BUILD_NUMBER}"
     }
     triggers {
@@ -31,6 +32,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo "deploying"
+                sh "aws eks --region eu-west-2 update-kubeconfig \ --name ce-cluster"
                 sh "helm install ${HELM_CHART} ./${HELM_CHART}"
             }
         }
