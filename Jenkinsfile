@@ -1,6 +1,8 @@
 pipeline {
     agent any
     environment {
+        AWS_ACCESS_KEY_ID     = credentials('ACCESS_KEY_ID')
+        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
         AWS_REGION = 'eu-west-2'
         ECR_REGISTRY = '494108812211.dkr.ecr.eu-west-2.amazonaws.com'
         ECR_REPOSITORY = 'lovegames-project-frontend'
